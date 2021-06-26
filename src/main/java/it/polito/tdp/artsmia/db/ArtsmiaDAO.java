@@ -137,7 +137,7 @@ public List<Artist> getArtistsByRole(String role) {
 }
 public List<Adiacenza> getAdiacenza(String role) {
 	
-	String sql = "SELECT DISTINCT a1.`artist_id` as a1,a2.`artist_id` as a2,count(*) as peso "
+	String sql = "SELECT DISTINCT a1.`artist_id` as a1,a2.`artist_id` as a2,count(DISTINCT e1.exhibition_id) as peso "
 			+ "FROM authorship a1,authorship a2,exhibition_objects e1,exhibition_objects e2 "
 			+ "WHERE e1.`object_id`=a1.`object_id`AND e2.`object_id`=a2.object_id AND e1.`exhibition_id`=e2.`exhibition_id` AND "
 			+ "a1.`artist_id`>a2.`artist_id` AND a1.`role`=? AND a2.`role`=? "

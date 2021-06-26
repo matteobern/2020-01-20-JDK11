@@ -28,8 +28,7 @@ public void creaGrafo(String role) {
 	Graphs.addAllVertices(grafo, dao.getArtistsByRole(role));
 	System.out.print("vertici:"+this.grafo.vertexSet().size());
 	for(Adiacenza a : dao.getAdiacenza(role)) {
-		if(grafo.containsVertex(idArtist.get(a.getA1())) && (grafo.containsVertex(idArtist.get(a.getA2()))))
-		Graphs.addEdge(grafo, idArtist.get(a.getA1()), idArtist.get(a.getA2()), a.getPeso());
+		Graphs.addEdgeWithVertices(grafo, idArtist.get(a.getA1()),idArtist.get(a.getA2()),a.getPeso() );
 	}
 	System.out.print(" archi:"+this.grafo.edgeSet().size());
 }
