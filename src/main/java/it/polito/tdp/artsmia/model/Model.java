@@ -1,5 +1,6 @@
 package it.polito.tdp.artsmia.model;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,5 +35,13 @@ public void creaGrafo(String role) {
 }
 public List<String> allRoles(){
 	return this.dao.listRoles();
+}
+public List<Adiacenza> getAdiacenze(String role){
+	List<Adiacenza> result=dao.getAdiacenza(role);
+	Collections.sort(result);
+	return result;
+}
+public Artist getArtist(Integer id) {
+	return this.idArtist.get(id);
 }
 }

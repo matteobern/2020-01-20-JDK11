@@ -3,6 +3,7 @@ package it.polito.tdp.artsmia;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import it.polito.tdp.artsmia.model.Adiacenza;
 import it.polito.tdp.artsmia.model.Model;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -43,6 +44,8 @@ public class ArtsmiaController {
     void doArtistiConnessi(ActionEvent event) {
     	txtResult.clear();
     	txtResult.appendText("Calcola artisti connessi");
+    	for(Adiacenza a : model.getAdiacenze(this.boxRuolo.getValue()))
+    		txtResult.appendText("\n"+model.getArtist(a.getA1()).getName()+"-"+model.getArtist(a.getA2()).getName()+"   -"+a.getPeso());
     }
 
     @FXML
