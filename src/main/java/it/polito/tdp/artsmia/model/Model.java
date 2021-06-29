@@ -1,5 +1,7 @@
 package it.polito.tdp.artsmia.model;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,7 +17,7 @@ public class Model {
 ArtsmiaDAO dao;
 Map<Integer,Artist> idArtist;
 private Graph<Artist,DefaultWeightedEdge> grafo;
-
+private List<Artist> percorsoMigliore;
 public Model() {
 	this.dao=new ArtsmiaDAO();
 	this.idArtist=new HashMap<>();
@@ -32,7 +34,56 @@ public void creaGrafo(String role) {
 	}
 	System.out.print(" archi:"+this.grafo.edgeSet().size());
 }
+
+
+
+
+
+
 public List<String> allRoles(){
 	return this.dao.listRoles();
 }
+public List<Adiacenza> getAdiacenze(String role){
+	List<Adiacenza> result=this.dao.getAdiacenza(role);
+	Collections.sort(result);
+	return result;
+}
+public List<Artist> percorsoMigliore(String codice){
+	Integer id=Integer.parseInt(codice);
+	Artist partenza=this.idArtist.get(id);
+	this.percorsoMigliore=null;
+	List<Artist> parziale=new ArrayList<>();
+	parziale.add(partenza);
+	cerca(parziale,0);
+	return this.percorsoMigliore;
+}
+public void cerca(List<Artist> parziale,int peso) {
+
+	
+	
+	Artist ultimo=parziale.get(parziale.size()-1);
+	for(DefaultWeightedEdge e : grafo.outgoingEdgesOf(ultimo) ) {
+		Artist vicino=Graphs.getOppositeVertex(grafo, e, ultimo);
+		if(peso==0) {
+		int pesoGiusto = (int)grafo.getEdgeWeight(e);
+		parziale.add(vicino);
+		cerca(parziale,pesoGiusto);
+		parziale.remove(vicino);
+		}
+		else {
+			if(!parziale.contains(vicino) &&  (int)grafo.getEdgeWeight(e)==peso) {
+				parziale.add(vicino);
+				cerca(parziale,peso);
+				parziale.remove(vicino);
+																				}
+			
+		}
+		if(this.percorsoMigliore==null || parziale.size()>this.percorsoMigliore.size()) {
+			this.percorsoMigliore=parziale;
+			return;
+		}
+		
+	}
+}
+
 }

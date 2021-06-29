@@ -1,6 +1,6 @@
 package it.polito.tdp.artsmia.model;
 
-public class Adiacenza {
+public class Adiacenza implements Comparable<Adiacenza>{
 Integer a1;
 Integer a2;
 Integer peso;
@@ -27,5 +27,15 @@ public Integer getPeso() {
 public void setPeso(Integer peso) {
 	this.peso = peso;
 }
+@Override
+public int compareTo(Adiacenza o) {
+	// TODO Auto-generated method stub
+	return -this.peso.compareTo(o.peso);
+}
+@Override
+public String toString() {
+	return "Adiacenza [a1=" + a1 + ", a2=" + a2 + ", peso=" + peso + "]";
+}
+
 
 }
